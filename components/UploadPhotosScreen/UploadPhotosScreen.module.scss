@@ -1,0 +1,100 @@
+@import '../../styles/variables.scss';
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.title {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.slotsContainer {
+    display: flex;
+    padding: 64px;
+    gap: 64px;
+}
+
+.photoSlot {
+    width: 216px;
+    height: 161px;
+    border-radius: 16px;
+    background-color: $color-surface3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.uploadImage {
+    cursor: pointer;
+}
+.uploadImage:hover {
+    scale: 1.1;
+   transition: all 0.7s ease-in-out;
+}
+.imagePreview {
+    width: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .updateImage {
+        position: absolute;
+        cursor: pointer;
+    }
+    .updateImage:hover {
+        scale: 1.1;
+        transition: all 0.7s ease-in-out;
+    }
+}
+
+.imagePreview img {
+    max-width: 100%;
+    max-height: 161px;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+
+.filePreview {
+    flex: 1;
+    /* занимает всё доступное пространство сверху */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background-color: #f0f0f0;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.uploadLabel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.uploadButton {
+    padding: 10px;
+    background-color: #007bff;
+    /* синий цвет */
+    color: #fff;
+    /* белый текст */
+    border-radius: 4px;
+
+    cursor: pointer;
+
+}
+
+/* Новый стиль для лейбла снизу контейнера */
+.photoLabel {
+    display: flex;
+    justify-content: center;
+    padding: 8px;
+
+}

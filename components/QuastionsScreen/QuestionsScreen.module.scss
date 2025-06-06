@@ -1,0 +1,36 @@
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+.section {
+  margin-bottom: 40px;
+}
+
+.sectionTitle {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.field {
+  margin-bottom: 15px;
+}
+
+.input {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+}
+
+.textarea {
+  width: 100%;
+  padding:8px;
+  font-size:14px;
+}
+
+.buttonsContainer {
+  display: flex;
+  justify-content: flex-start;
+}

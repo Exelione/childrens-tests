@@ -8,21 +8,23 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store';
 
 
+
 interface PhotoSlot {
     label: string;
     file?: File;
 }
-
+interface Props {
+    onNext: () => void;
+}
 const initialPhotoSlots: PhotoSlot[] = [
     { label: 'Дом, дерево, человек' },
     { label: 'Несуществующее животное' },
     { label: 'Автопортрет' },
 ];
 
-const UploadPhotosScreen: React.FC = () => {
+const UploadPhotosScreen = ({ onNext }: Props)   => {
     const [photoSlots, setPhotoSlots] = useState<PhotoSlot[]>(initialPhotoSlots);
     const dispatch = useDispatch<AppDispatch>();
-
     const handleFileChange = (index: number, e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             const newFile = e.target.files[0];
@@ -46,7 +48,7 @@ const UploadPhotosScreen: React.FC = () => {
             // вызов thunk с передачей файлов
             const taskId = await dispatch(uploadPhotos(filesToUpload)).unwrap();
             console.log('Получен task_id:', taskId);
-            // тут можно перейти к следующему шагу или сохранить taskId в стейт/редукс
+            onNext();
         } catch (err) {
             console.error('Ошибка при загрузке файлов:', err);
         }

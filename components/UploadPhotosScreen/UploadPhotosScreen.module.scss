@@ -1,21 +1,60 @@
 @import '../../styles/variables.scss';
 
+
 .container {
     max-width: 900px;
+    max-height: 489px;
     margin: 0 auto;
-
-    border: 1px solid #ccc;
-    border-radius: 8px;
+    border-radius: 20px;
 }
 
 .title {
     font-size: 24px;
-    margin-bottom: 20px;
+    font-family: 'Circe Rounded Bold', sans-serif;
+    margin: 8px auto;
+    padding: 0 64px;
+    color: $color-title;
+}
+
+.formats {
+    display: flex;
+    align-items: center;
+    width: 475px;
+    height: 36px;
+    background-color: $color-red-050;
+    gap: 8px;
+    border-radius: 20px;
+    padding-top: 8px;
+    padding-right: 12px;
+    padding-bottom: 8px;
+    padding-left: 12px;
+    margin: 0 0 32px 64px;
+
+
+    p {
+        font-family: 'Circe Rounded', sans-serif;
+        font-size: 14px;
+        font-weight: 400;
+        color: $color-red-110;
+    }
+
+    span {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        border: 1px solid $color-red-110;
+        border-radius: 50%;
+        font-size: 14px;
+        font-weight: 400;
+        margin-right: 8px;
+    }
 }
 
 .slotsContainer {
     display: flex;
-    padding: 64px;
+    padding: 0 64px;
     gap: 64px;
 }
 
@@ -33,20 +72,24 @@
 .uploadImage {
     cursor: pointer;
 }
+
 .uploadImage:hover {
     scale: 1.1;
-   transition: all 0.7s ease-in-out;
+    transition: all 0.7s ease-in-out;
 }
+
 .imagePreview {
     width: 100%;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
+
     .updateImage {
         position: absolute;
         cursor: pointer;
     }
+
     .updateImage:hover {
         scale: 1.1;
         transition: all 0.7s ease-in-out;
@@ -61,40 +104,75 @@
 }
 
 
-.filePreview {
-    flex: 1;
-    /* занимает всё доступное пространство сверху */
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    background-color: #f0f0f0;
-    padding: 8px;
-    border-radius: 4px;
-}
-
 .uploadLabel {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.uploadButton {
-    padding: 10px;
-    background-color: #007bff;
-    /* синий цвет */
-    color: #fff;
-    /* белый текст */
-    border-radius: 4px;
 
-    cursor: pointer;
-
-}
-
-/* Новый стиль для лейбла снизу контейнера */
 .photoLabel {
     display: flex;
     justify-content: center;
     padding: 8px;
+    font-family: 'Circe Rounded', sans-serif;
+    font-size: 16px;
+}
+
+.footContainer {
+    margin: 0 64px;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 32px 0;
+
+    .step {
+        font-family: 'Circe Rounded', sans-serif;
+        font-size: 14px;
+        color: $color-muted-text;
+    }
+
+    .button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 125px;
+        height: 40px;
+        gap: 8px;
+        border: none;
+        border-radius: 20px;
+        padding-top: 10px;
+        padding-right: 24px;
+        padding-bottom: 10px;
+        padding-left: 24px;
+        font-family: 'Circe Rounded', sans-serif;
+        background-color: $color-blue-100;
+        color: $color-surface1;
+        cursor: pointer;
+
+        .arrow {
+            width: 14px;
+            height: 10px;
+            filter: brightness(0) invert(1);
+        }
+
+        &:disabled {
+            background-color: $color-disbled-button;
+            color: $color-muted-text;
+            cursor: not-allowed;
+
+            .arrow {
+                filter: brightness(0) invert(0.5);
+            }
+            &:hover {
+                transform: none;
+            }
+        }
+        &:hover {
+            transform: scale(1.1);
+            transition: transform 0.7s ease-in-out;
+        }
+    }
 
 }

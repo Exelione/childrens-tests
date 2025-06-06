@@ -1,5 +1,11 @@
 @import './styles/variables.scss';
 
-.hello {
-    color: $color-red-110
+
+.flowContainer {
+    width: 904px;
+    height: auto;
+    margin: 150px auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
 }
+

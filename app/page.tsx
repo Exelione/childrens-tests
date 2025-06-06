@@ -5,27 +5,42 @@ import UploadPhotosScreen from '../components/UploadPhotosScreen/UploadPhotosScr
 import { useState } from 'react';
 import QuestionsScreen from '../components/QuastionsScreen/QuestionsScreen';
 import ReportScreen from '../components/ReportScreen/ReportScreen';
+import ProgressBar from '../components/ProgressBar/ProgressBar';
+import styles from './page.module.scss';
+
+
+const STEPS = ['upload', 'questionnaire', 'report'] as const;
+type Step = typeof STEPS[number] | 'welcome';
 
 const Page: React.FC = () => {
-  const [step, setStep] = useState<'welcome' | 'upload' | 'questionnaire' | 'report' >('welcome');
+  const [step, setStep] = useState<Step>('welcome');
 
-  const handleStart = () => {
-    setStep('upload');
-  };
-  const handleProceedToQuestionnaire = () => {
-    setStep('questionnaire');
-  }
-  const handleSubmit = () => {
-    setStep('report');
-  }
+  const handleStart = () => setStep('upload');
+  const handleProceedToQuestionnaire = () => setStep('questionnaire');
+  const handleSubmit = () => setStep('report');
+  const handleRestart = () => setStep('welcome');
+
+  const currentStepIndex = STEPS.indexOf(step as typeof STEPS[number]);
+  const showProgress = step !== 'welcome';
 
   return (
-    <>
+    <div className={styles.flowContainer}>
+      {showProgress && (
+        <ProgressBar 
+          progress={(currentStepIndex + 1) / STEPS.length} 
+        />
+      )}
+      
       {step === 'welcome' && <WelcomeScreen onStart={handleStart} />}
       {step === 'upload' && <UploadPhotosScreen onNext={handleProceedToQuestionnaire} />}
-      {step === 'questionnaire' && <QuestionsScreen onBack={handleStart} submit={handleSubmit}/>}
-      {step === 'report' && <ReportScreen />}
-    </>
+      {step === 'questionnaire' && (
+        <QuestionsScreen 
+          onBack={() => setStep('upload')} 
+          submit={handleSubmit}
+        />
+      )}
+      {step === 'report' && <ReportScreen onStart={handleRestart} />}
+    </div>
   );
 };
 

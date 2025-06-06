@@ -6,7 +6,7 @@ import style from './ReportScreen.module.scss';
 import { useSelector } from 'react-redux';
 import { PhotosState } from '../QuastionsScreen/QuestionsScreen';
 
-const ReportScreen = () => {
+const ReportScreen = ({ onStart }: { onStart: () => void }) => {
   const photos = useSelector((state: { photos: PhotosState }) => state.photos);
   const taskId = photos.taskId;
   const [status, setStatus] = useState<'pending' | 'ready' | 'error'>('pending');
@@ -36,7 +36,7 @@ const ReportScreen = () => {
         }
 
         const contentType = response.headers.get('content-type');
-        
+
         if (contentType?.includes('application/pdf')) {
           const blob = await response.blob();
           setPdfBlob(blob);
@@ -89,7 +89,7 @@ const ReportScreen = () => {
 
   const handleDownload = () => {
     if (!pdfBlob) return;
-    
+
     const url = URL.createObjectURL(pdfBlob);
     const link = document.createElement('a');
     link.href = url;
@@ -102,7 +102,7 @@ const ReportScreen = () => {
 
   const handleView = () => {
     if (!pdfBlob) return;
-    
+
     const url = URL.createObjectURL(pdfBlob);
     window.open(url, '_blank');
     // URL.revokeObjectURL(url); // Не revoke, чтобы PDF оставался доступен
@@ -111,7 +111,7 @@ const ReportScreen = () => {
   return (
     <div className={style.container}>
       <h1>Результаты психологического анализа</h1>
-      
+
       {status === 'pending' && (
         <div className={style.statusMessage}>
           <div className={style.spinner}></div>
@@ -124,7 +124,7 @@ const ReportScreen = () => {
         <div className={style.errorMessage}>
           <h3>Ошибка при получении отчета</h3>
           <p>{errorMessage}</p>
-          <button 
+          <button
             onClick={() => window.location.reload()}
             className={style.retryButton}
           >
@@ -137,7 +137,7 @@ const ReportScreen = () => {
         <div className={style.reportActions}>
           <h2>Ваш психологический анализ готов!</h2>
           <p>Результаты тестирования успешно сформированы.</p>
-          
+
           <div className={style.buttons}>
             <button
               onClick={handleView}
@@ -145,7 +145,7 @@ const ReportScreen = () => {
             >
               Открыть отчет в новом окне
             </button>
-            
+
             <button
               onClick={handleDownload}
               className={style.downloadButton}
@@ -156,6 +156,7 @@ const ReportScreen = () => {
 
           <div className={style.note}>
             <p>Рекомендуем сохранить отчет для консультации со специалистом.</p>
+            <button className={style.viewButton} onClick={onStart}>В начало</button>
           </div>
         </div>
       )}

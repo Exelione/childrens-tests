@@ -3,6 +3,7 @@ import styles from './UploadPhotosScreen.module.scss';
 import uploadImage from '../../public/images/uploadImage.png'
 import updateImage from '../../public/images/updateImage.png'
 import Image from 'next/image';
+import VectorArrow from '../../public/icons/VectorArrow.svg'
 import { uploadPhotos } from '../../store/thunks/photosThunks';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store';
@@ -22,7 +23,7 @@ const initialPhotoSlots: PhotoSlot[] = [
     { label: 'Автопортрет' },
 ];
 
-const UploadPhotosScreen = ({ onNext }: Props)   => {
+const UploadPhotosScreen = ({ onNext }: Props) => {
     const [photoSlots, setPhotoSlots] = useState<PhotoSlot[]>(initialPhotoSlots);
     const dispatch = useDispatch<AppDispatch>();
     const handleFileChange = (index: number, e: ChangeEvent<HTMLInputElement>) => {
@@ -33,21 +34,20 @@ const UploadPhotosScreen = ({ onNext }: Props)   => {
             setPhotoSlots(updatedSlots);
         }
     };
-     const handleUpdateClick = (index: number) => {
+    const handleUpdateClick = (index: number) => {
         document.getElementById(`fileInput-${index}`)?.click();
     };
 
     const allPhotosUploaded = photoSlots.every(slot => slot.file !== undefined);
-    
+
     const handleNext = async () => {
         if (!allPhotosUploaded) return;
 
         try {
-            // подготовим массив файлов для отправки
-            const filesToUpload = photoSlots.map(slot => slot.file!) // ! — потому что мы проверили что все есть
-            // вызов thunk с передачей файлов
-            const taskId = await dispatch(uploadPhotos(filesToUpload)).unwrap();
-            console.log('Получен task_id:', taskId);
+
+            const filesToUpload = photoSlots.map(slot => slot.file!)
+
+            await dispatch(uploadPhotos(filesToUpload)).unwrap();
             onNext();
         } catch (err) {
             console.error('Ошибка при загрузке файлов:', err);
@@ -57,7 +57,9 @@ const UploadPhotosScreen = ({ onNext }: Props)   => {
     return (
         <div className={styles.container}>
             <div className={styles.title}>Загрузите фотографии рисунков</div>
-
+            <div className={styles.formats}>
+                <p><span>!</span>Допустимые форматы файлов: jpg, jpeg, png, pdf. Размер не более 5 Мб</p>
+            </div>
             <div className={styles.slotsContainer}>
                 {photoSlots.map((slot, index) => (
                     <div key={index} className={styles.photoSlotWrapper}>
@@ -71,8 +73,8 @@ const UploadPhotosScreen = ({ onNext }: Props)   => {
                                         width={100}
                                         height={100}
                                     />
-                                     <Image onClick={() => handleUpdateClick(index)} className={styles.updateImage} src={updateImage} alt="Upload Image" />
-                                    {/* Скрытый input для выбора файла */}
+                                    <Image onClick={() => handleUpdateClick(index)} className={styles.updateImage} src={updateImage} alt="Upload Image" />
+
                                     <input
                                         type="file"
                                         accept="image/*"
@@ -99,13 +101,13 @@ const UploadPhotosScreen = ({ onNext }: Props)   => {
             </div>
 
             <div className={styles.footContainer}>
-                <span>Шаг 1/3</span>
+                <span className={styles.step}>Шаг 1/3</span>
                 <button
                     className={`${styles.button} ${!allPhotosUploaded ? styles.buttonDisabled : ''}`}
                     disabled={!allPhotosUploaded}
                     onClick={handleNext}
                 >
-                    Далее
+                    Далее <Image className={styles.arrow} src={VectorArrow} alt="Arrow" />
                 </button>
             </div>
         </div>

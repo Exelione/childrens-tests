@@ -4,10 +4,7 @@ import React, { useState } from 'react';
 import style from './QuestionsScreen.module.scss';
 import RadioOptions from '../RadioOptions/RadioOptions';
 import { useSelector } from 'react-redux';
-
-
-
-
+import { CustomDatePicker } from '../CustomDatePicker/CustomDatePicker';
 
 interface Props {
   onBack: () => void;
@@ -16,7 +13,6 @@ interface Props {
 export interface PhotosState {
   taskId: string;
 }
-
 
 const QuestionsScreen = ({ onBack, submit }: Props) => {
   const [, setIsSubmitting] = useState(false);
@@ -45,11 +41,6 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
         throw new Error('Ошибка при отправке данных');
       }
 
-      // Можно обработать ответ или перейти к статусу
-      alert('Данные успешно отправлены');
-
-      // Например, можно сразу перейти к статусу отчета
-      // или оставить для дальнейших действий
     } catch (error) {
       console.error(error);
       alert('Произошла ошибка при отправке');
@@ -87,13 +78,12 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
   const isFormComplete = () => {
     return requiredFields.every(field => answers[field]);
   };
-  console.log(answers)
   return (
     <div className={style.container}>
       <section className={style.section}>
         <h2 className={style.sectionTitle}>Общая информация о ребенке</h2>
         <div className={style.field}>
-          <label>Имя ребенка</label>
+          <label className={style.label}>Имя ребенка</label>
           <input
             type="text"
             className={style.input}
@@ -101,12 +91,12 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <label>Дата рождения ребенка</label>
-          <input
-            type="date"
-            className={style.input}
-            onChange={(e) => handleAnswerChange('childDOB', e.target.value)}
+          <label className={style.label} >Дата рождения ребенка</label>
+          <CustomDatePicker
+            onChange={(date) => handleAnswerChange('childDOB', date)}
+            placeholder="дд.мм.гггг"
           />
+
         </div>
         <div className={style.field}>
           <label>Пол ребенка</label>

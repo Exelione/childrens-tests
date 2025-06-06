@@ -1,33 +1,86 @@
+@import '../../styles/variables.scss';
+
 .container {
-  max-width: 1200px;
-  margin: auto;
-  padding: 20px;
+  font-family: 'Circe Rounded Bold', sans-serif;
+  line-height: 110%;
+  letter-spacing: 0%;
 }
 
 .section {
-  margin-bottom: 40px;
+  margin: 64px;
+  max-width: 776px;
+
+  .sectionTitle {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+
+  .field {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+
+    .label {
+      font-family: 'Circe Rounded', sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 135%;
+      vertical-align: middle;
+    }
+  }
+
+
+  .input, .dateInput {
+    max-height: 40px;
+    gap: 10px;
+    border-radius: 6px;
+    padding: 10px 12px;
+    border: 1px solid $color-muted-background;
+    font-family: 'Circe Rounded', sans-serif;
+    font-size: 14px;
+    outline: none;
+    line-height: 140%;
+    letter-spacing: 0%;
+
+    &:focus {
+        border: 1px solid $color-violet-110;
+        transition: all 0.5s ease;
+    }
 }
 
-.sectionTitle {
-  font-size: 22px;
-  font-weight: bold;
-  margin-bottom: 15px;
+.dateInput {
+    width: 87px;
+    position: relative;
+    // Убираем стандартную иконку календаря ТОЛЬКО для dateInput
+    &::-webkit-calendar-picker-indicator {
+        opacity: 0;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        cursor: pointer;
+    }
+
+    &::-moz-calendar-picker-indicator {
+        opacity: 0;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        cursor: pointer;
+    }
 }
 
-.field {
-  margin-bottom: 15px;
 }
 
-.input {
-  width: 100%;
-  padding: 8px;
-  font-size: 14px;
-}
+
+
 
 .textarea {
   width: 100%;
-  padding:8px;
-  font-size:14px;
+  padding: 8px;
+  font-size: 14px;
 }
 
 .buttonsContainer {

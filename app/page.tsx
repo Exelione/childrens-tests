@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react';
 import WelcomeScreen from '../components/WelcomeScreen/WelcomeScreen';
 import UploadPhotosScreen from '../components/UploadPhotosScreen/UploadPhotosScreen';
 import { useState } from 'react';
@@ -12,7 +13,7 @@ import styles from './page.module.scss';
 const STEPS = ['upload', 'questionnaire', 'report'] as const;
 type Step = typeof STEPS[number] | 'welcome';
 
-const Page: React.FC = () => {
+const Page = () => {
   const [step, setStep] = useState<Step>('welcome');
 
   const handleStart = () => setStep('upload');

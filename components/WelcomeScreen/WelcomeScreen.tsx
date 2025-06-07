@@ -1,10 +1,11 @@
+import React from 'react';
 import style from './WelcomeScreen.module.scss';
 
 interface WelcomeScreenProps {
   onStart: () => void;
 }
 
-const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStart }) => {
+const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
   return (
     <div className={style.welcomeScreenContainer}>
       <h1>Название теста</h1>

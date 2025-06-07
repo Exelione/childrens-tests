@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useRef, useEffect } from 'react';
 import styles from './CustomDatePicker.module.scss';
 
@@ -14,10 +15,10 @@ export const CustomDatePicker = ({
   placeholder = 'Выберите дату',
   initialDate = '2017-07-28' // Устанавливаем начальную дату по умолчанию
 }: CustomDatePickerProps) => {
-  const [date, setDate] = useState(value || initialDate); // Используем initialDate если value пустое
+  const [date, setDate] = useState(value || initialDate);
   const [isOpen, setIsOpen] = useState(false);
   const calendarRef = useRef<HTMLDivElement>(null);
-  
+
   // Форматирование даты для отображения
   const formatDisplayDate = (dateString: string) => {
     if (!dateString) return placeholder;
@@ -45,42 +46,44 @@ export const CustomDatePicker = ({
 
   // Раздельное форматирование месяца и года с разными стилями
   const russianMonths = [
-  'Январь', 'Февраль', 'Март', 'Апрель',
-  'Май', 'Июнь', 'Июль', 'Август',
-  'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
-];
+    'Январь', 'Февраль', 'Март', 'Апрель',
+    'Май', 'Июнь', 'Июль', 'Август',
+    'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
+  ];
 
-const formatMonthYear = (year: number, month: number) => {
-  return (
-    <span className={styles.monthYear}>
-      <span className={styles.month}>{russianMonths[month]}</span>
-      <span className={styles.year}> {year}</span>
-    </span>
-  );
-};
+  const formatMonthYear = (year: number, month: number) => {
+    return (
+      <span className={styles.monthYear}>
+        <span className={styles.month}>{russianMonths[month]}</span>
+        <span className={styles.year}> {year}</span>
+      </span>
+    );
+  };
 
   const generateCalendarDays = () => {
     if (!isOpen) return null;
-    
-    const currentDate = date ? new Date(date) : new Date(initialDate); // Используем initialDate как fallback
+
+    const currentDate = date ? new Date(date) : new Date(initialDate);
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
-    
+
     const firstDay = new Date(year, month, 1);
     const lastDay = new Date(year, month + 1, 0);
     const daysInMonth = lastDay.getDate();
-    
+
     const startDay = firstDay.getDay();
     const days = [];
-    
+
     // Пустые ячейки для начала месяца
     for (let i = 0; i < startDay; i++) {
       days.push(<div key={`empty-${i}`} className={styles.emptyDay}></div>);
     }
-    
+
     // Дни месяца
     for (let day = 1; day <= daysInMonth; day++) {
-      const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+      const dateStr = `${year}-${String(month + 1)
+        .padStart(2, '0')}-${String(day)
+          .padStart(2, '0')}`;
       days.push(
         <div
           key={dateStr}
@@ -91,7 +94,7 @@ const formatMonthYear = (year: number, month: number) => {
         </div>
       );
     }
-    
+
     return (
       <div className={styles.calendarGrid}>
         <div className={styles.header}>
@@ -117,13 +120,13 @@ const formatMonthYear = (year: number, month: number) => {
 
   return (
     <div className={styles.datePickerContainer} ref={calendarRef}>
-      <div 
+      <div
         className={styles.dateInput}
         onClick={() => setIsOpen(!isOpen)}
       >
         {formatDisplayDate(date)}
       </div>
-      
+
       {isOpen && (
         <div className={styles.calendarDropdown}>
           {generateCalendarDays()}

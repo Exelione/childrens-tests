@@ -1,37 +1,62 @@
 @import '../../styles/variables.scss';
 
 .container {
-  font-family: 'Circe Rounded Bold', sans-serif;
   line-height: 110%;
   letter-spacing: 0%;
 }
 
 .section {
-  margin: 64px;
+  margin: 48px 64px;
   max-width: 776px;
 
   .sectionTitle {
-    font-size: 22px;
+    font-family: 'Circe Rounded Bold', sans-serif;
+    font-size: 20px;
     font-weight: bold;
-    margin-bottom: 15px;
   }
 
-  .field {
+  .field,
+  .textAreaField {
     margin-bottom: 15px;
     display: flex;
     flex-direction: column;
+  }
 
-    .label {
-      font-family: 'Circe Rounded', sans-serif;
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 135%;
-      vertical-align: middle;
-    }
+  .textAreaField {
+    margin: 32px 0;
+  }
+
+  .textarea {
+    padding: 8px;
+    height: 96px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 140%;
+    width: 776;
+    gap: 10px;
+    border-radius: 6px;
+    padding: 10px 12px;
+    border: solid 1px $color-muted-background;
+    transition: all 0.5s ease;
+    outline: none;
+  }
+
+  .textarea:focus {
+    border: solid 1px $color-violet-110;
+  }
+
+  .label {
+    font-family: 'Circe Rounded', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 135%;
+    vertical-align: middle;
+    margin-bottom: 4px;
   }
 
 
-  .input, .dateInput {
+  .input,
+  .dateInput {
     max-height: 40px;
     gap: 10px;
     border-radius: 6px;
@@ -44,46 +69,140 @@
     letter-spacing: 0%;
 
     &:focus {
-        border: 1px solid $color-violet-110;
-        transition: all 0.5s ease;
+      border: 1px solid $color-violet-110;
+      transition: all 0.5s ease;
     }
-}
+  }
 
-.dateInput {
+  .dateInput {
     width: 87px;
     position: relative;
-    // Убираем стандартную иконку календаря ТОЛЬКО для dateInput
+
     &::-webkit-calendar-picker-indicator {
-        opacity: 0;
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        left: 0;
-        cursor: pointer;
+      opacity: 0;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      cursor: pointer;
     }
 
     &::-moz-calendar-picker-indicator {
-        opacity: 0;
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        left: 0;
-        cursor: pointer;
+      opacity: 0;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      cursor: pointer;
     }
-}
+  }
 
 }
 
+.infoSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 64px;
+  max-width: 776px;
+  background-color: $color-red-050;
+  padding: 24px;
+  gap: 16px;
+  border-radius: 8px;
 
+  .infoBlock {
+    display: flex;
+    align-items: flex-start;
+    height: auto;
+    gap: 16px;
 
-
-.textarea {
-  width: 100%;
-  padding: 8px;
-  font-size: 14px;
+    .text {
+      font-size: 14px;
+      font-family: 'Circe Rounded', sans-serif;
+      line-height: 140%;
+      display: inline-block;
+      color: $color-default;
+    }
+  }
 }
+
+
+
+
 
 .buttonsContainer {
   display: flex;
-  justify-content: flex-start;
+  width: auto;
+  margin: 64px;
+  height: 40px;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-bottom: 32px;
+
+  .buttons {
+    display: flex;
+    gap: 8px;
+  }
+}
+
+.step {
+  font-family: 'Circe Rounded', sans-serif;
+  font-size: 14px;
+  color: $color-muted-text;
+}
+
+.button,
+.buttonBack {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 209px;
+  height: 40px;
+  gap: 8px;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 24px;
+  font-family: 'Circe Rounded', sans-serif;
+  font-size: 16px;
+  background-color: $color-blue-100;
+  color: $color-surface1;
+  cursor: pointer;
+  transition: background-color 0.7s ease-in-out;
+
+  &:hover {
+    background-color: $color-blue-110;
+  }
+  .arrowBig {
+   filter: brightness(0) invert(133);
+    
+  }
+}
+
+
+.button:disabled {
+  background-color: $color-disbled-button;
+  color: $color-muted-text;
+  cursor: not-allowed;
+
+  &:hover {
+    transform: none;
+  }
+}
+
+.buttonBack {
+  width: 264px;
+  background-color: $color-blue-050;
+  font-size: 16px;
+  line-height: 135%;
+  text-align: center;
+  color: $color-default;
+
+  .arrow {
+    width: 7px;
+    fill: $color-muted-text;
+  }
+
+}
+.buttonBack:hover {
+  background-color: $color-blue-80;
 }

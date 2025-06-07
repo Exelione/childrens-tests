@@ -1,0 +1,70 @@
+/* RadioOptions.module.scss */
+
+@import '../../styles/variables.scss';
+
+.radioOptions {
+    display: flex;
+    gap: 25px;
+    color: $color-default;
+    font-size: 14px;
+}
+
+
+
+.radioOption {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    line-height: 135%;
+    font-family: 'Circle Rounded', sans-serif;
+
+    /* Для новых стилей */
+    position: relative; /* чтобы позиционировать псевдоэлемент */
+}
+
+/* Скрываем стандартный input */
+.radioInput {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+
+    background-color: $color-surface5;
+    transition: 0.2s all linear;
+    outline: none;
+
+    position: relative; /* для псевдоэлементов */
+}
+
+/* Стиль для checked состояния */
+.radioInput:checked {
+    background-color: $color-blue-100
+
+}
+
+.radioInput:checked::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 6px; /* размер внутреннего кружка */
+    height: 6px;
+    border-radius: 50%;
+    background-color: $color-surface1;
+}
+
+/* hover эффект */
+.radioInput:hover {
+    border-color: #555; /* чуть темнее при наведении */
+}
+
+/* disabled состояние (если нужно) */
+.radioInput:disabled {
+    border-color: #ccc; /* светлый граница для disabled */
+}

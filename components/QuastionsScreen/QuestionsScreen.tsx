@@ -1,10 +1,16 @@
 'use client'
 
 import React, { useState } from 'react';
-import style from './QuestionsScreen.module.scss';
+
 import RadioOptions from '../RadioOptions/RadioOptions';
 import { useSelector } from 'react-redux';
 import { CustomDatePicker } from '../CustomDatePicker/CustomDatePicker';
+import Image from 'next/image';
+import okFinger from '../../public/images/okFinger.png';
+import flag from '../../public/images/flag.png';
+import arrow from '../../public/icons/arrow.svg';
+import ForwardRight from '../../public/icons/ForwardRight.svg';
+import style from './QuestionsScreen.module.scss';
 
 interface Props {
   onBack: () => void;
@@ -31,7 +37,8 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
 
     setIsSubmitting(true);
     try {
-      const response = await fetch('https://sirius-draw-test-94500a1b4a2f.herokuapp.com/submit-survey', {
+      const response = await fetch(
+        'https://sirius-draw-test-94500a1b4a2f.herokuapp.com/submit-survey', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -99,7 +106,7 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
 
         </div>
         <div className={style.field}>
-          <label>Пол ребенка</label>
+          <label className={style.label}>Пол ребенка</label>
           <RadioOptions
             name="childGender"
             options={[{ label: 'Мужской', value: 'male' }, { label: 'Женский', value: 'female' }]}
@@ -108,7 +115,7 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <label>Имя родителя, заполняющего анкету</label>
+          <label className={style.label}>Имя родителя, заполняющего анкету</label>
           <input
             type="text"
             className={style.input}
@@ -116,10 +123,30 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
       </section>
+      <section className={style.infoSection}>
+        <div className={style.infoBlock}>
+          <Image
+            src={okFinger}
+            alt="finger"
+            width={32}
+            height={30}
+          />
+          <span className={style.text}>
+            Пожалуйста, внимательно прочитайте каждый вопрос и выберите наиболее подходящий
+            вариант ответа,  отражающий поведение и эмоциональное состояние вашего ребенка в
+            течение последних 2-4 недель. Отвечайте максимально честно и искренне,
+            так как от этого зависит точность оценки психоэмоционального
+            развития Вашего ребенка.</span>
+        </div>
+        <div className={style.infoBlock}>
+          <Image src={flag} alt='flag' width={32} height={32} />
+          <span className={style.text}>Все вопросы обязательны к заполнению</span>
+        </div>
+      </section>
       <section className={style.section}>
         <h2 className={style.sectionTitle}>Раздел 1. Эмоциональная сфера</h2>
         <div className={style.field}>
-          <p>Ребенок часто выражает радость и удовольствие:</p>
+          <label className={style.label}>Ребенок часто выражает радость и удовольствие:</label>
           <RadioOptions
             name="q1_1"
             options={checkboxOptions}
@@ -128,7 +155,9 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок часто грустит или плачет без видимой причины:</p>
+          <label className={style.label}>
+            Ребенок часто грустит или плачет без видимой причины:
+          </label>
           <RadioOptions
             name="q1_2"
             options={checkboxOptions}
@@ -137,7 +166,7 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок часто выражает радость и удовольствие:</p>
+          <label className={style.label}>Ребенок часто выражает радость и удовольствие:</label>
           <RadioOptions
             name="q1_3"
             options={checkboxOptions}
@@ -146,7 +175,9 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок часто грустит или плачет без видимой причины:</p>
+          <label className={style.label}>
+            Ребенок часто грустит или плачет без видимой причины:
+          </label>
           <RadioOptions
             name="q1_4"
             options={checkboxOptions}
@@ -155,7 +186,7 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок часто выражает радость и удовольствие:</p>
+          <label className={style.label}>Ребенок часто выражает радость и удовольствие:</label>
           <RadioOptions
             name="q1_5"
             options={checkboxOptions}
@@ -164,7 +195,9 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок часто грустит или плачет без видимой причины:</p>
+          <label className={style.label}>
+            Ребенок часто грустит или плачет без видимой причины:
+          </label>
           <RadioOptions
             name="q1_6"
             options={checkboxOptions}
@@ -173,7 +206,7 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок часто выражает радость и удовольствие:</p>
+          <label className={style.label}>Ребенок часто выражает радость и удовольствие:</label>
           <RadioOptions
             name="q1_7"
             options={checkboxOptions}
@@ -182,7 +215,7 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок часто выражает радость и удовольствие:</p>
+          <label className={style.label}>Ребенок часто выражает радость и удовольствие:</label>
           <RadioOptions
             name="q1_8"
             options={checkboxOptions}
@@ -191,7 +224,9 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок часто грустит или плачет без видимой причины:</p>
+          <label className={style.label}>
+            Ребенок часто грустит или плачет без видимой причины:
+          </label>
           <RadioOptions
             name="q1_9"
             options={checkboxOptions}
@@ -200,7 +235,7 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок часто выражает радость и удовольствие: </p>
+          <label className={style.label}>Ребенок часто выражает радость и удовольствие:</label>
           <RadioOptions
             name="q1_10"
             options={checkboxOptions}
@@ -212,7 +247,7 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
       <section className={style.section}>
         <h2 className={style.sectionTitle}>Раздел 2. Социальное взаимодействие</h2>
         <div className={style.field}>
-          <p>Ребенок легко заводит друзей:</p>
+          <label className={style.label}>Ребенок легко заводит друзей:</label>
           <RadioOptions
             name="q2_1"
             options={checkboxOptions}
@@ -221,7 +256,9 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок предпочитает играть один, а не с другими детьми:</p>
+          <label className={style.label}>
+            Ребенок предпочитает играть один, а не с другими детьми:
+          </label>
           <RadioOptions
             name="q2_2"
             options={checkboxOptions}
@@ -230,7 +267,7 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок легко заводит друзей:</p>
+          <label className={style.label}>Ребенок легко заводит друзей:</label>
           <RadioOptions
             name="q2_3"
             options={checkboxOptions}
@@ -239,7 +276,9 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок предпочитает играть один, а не с другими детьми:</p>
+          <label className={style.label}>
+            Ребенок предпочитает играть один, а не с другими детьми:
+          </label>
           <RadioOptions
             name="q2_4"
             options={checkboxOptions}
@@ -248,7 +287,7 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок легко заводит друзей:</p>
+          <label className={style.label}>Ребенок легко заводит друзей:</label>
           <RadioOptions
             name="q2_5"
             options={checkboxOptions}
@@ -257,7 +296,9 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок предпочитает играть один, а не с другими детьми:</p>
+          <label className={style.label}>
+            Ребенок предпочитает играть один, а не с другими детьми:
+          </label>
           <RadioOptions
             name="q2_6"
             options={checkboxOptions}
@@ -266,7 +307,7 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок легко заводит друзей:</p>
+          <label className={style.label}>Ребенок легко заводит друзей:</label>
           <RadioOptions
             name="q2_7"
             options={checkboxOptions}
@@ -275,7 +316,9 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок предпочитает играть один, а не с другими детьми:</p>
+          <label className={style.label}>
+            Ребенок предпочитает играть один, а не с другими детьми:
+          </label>
           <RadioOptions
             name="q2_8"
             options={checkboxOptions}
@@ -284,7 +327,7 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок легко заводит друзей:</p>
+          <label className={style.label}>Ребенок легко заводит друзей:</label>
           <RadioOptions
             name="q2_9"
             options={checkboxOptions}
@@ -293,7 +336,9 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок предпочитает играть один, а не с другими детьми:</p>
+          <label className={style.label}>
+            Ребенок предпочитает играть один, а не с другими детьми:
+          </label>
           <RadioOptions
             name="q2_10"
             options={checkboxOptions}
@@ -305,7 +350,7 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
       <section className={style.section}>
         <h2 className={style.sectionTitle}>Раздел 3. Саморегуляция и поведение</h2>
         <div className={style.field}>
-          <p>Ребенок умеет следовать правилам и инструкциям:</p>
+          <label className={style.label}>Ребенок умеет следовать правилам и инструкциям:</label>
           <RadioOptions
             name="q3_1"
             options={checkboxOptions}
@@ -314,7 +359,7 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенку трудно контролировать свои импульсы:</p>
+          <label className={style.label}>Ребенку трудно контролировать свои импульсы:</label>
           <RadioOptions
             name="q3_2"
             options={checkboxOptions}
@@ -323,7 +368,7 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок легко отвлекается и теряет интерес к деятельности:</p>
+          <label className={style.label}>Ребенок умеет следовать правилам и инструкциям:</label>
           <RadioOptions
             name="q3_3"
             options={checkboxOptions}
@@ -332,7 +377,7 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок может долго и сосредоточенно заниматься одной деятельностью:</p>
+          <label className={style.label}>Ребенок умеет следовать правилам и инструкциям:</label>
           <RadioOptions
             name="q3_4"
             options={checkboxOptions}
@@ -341,7 +386,7 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок легко отвлекается и теряет интерес к деятельности:</p>
+          <label className={style.label}>Ребенку трудно контролировать свои импульсы:</label>
           <RadioOptions
             name="q3_5"
             options={checkboxOptions}
@@ -350,7 +395,7 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок может долго и сосредоточенно заниматься одной деятельностью:</p>
+          <label className={style.label}>Ребенок умеет следовать правилам и инструкциям:</label>
           <RadioOptions
             name="q3_6"
             options={checkboxOptions}
@@ -359,7 +404,7 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок легко отвлекается и теряет интерес к деятельности:</p>
+          <label className={style.label}>Ребенку трудно контролировать свои импульсы:</label>
           <RadioOptions
             name="q3_7"
             options={checkboxOptions}
@@ -368,7 +413,7 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок может долго и сосредоточенно заниматься одной деятельностью:</p>
+          <label className={style.label}>Ребенок умеет следовать правилам и инструкциям:</label>
           <RadioOptions
             name="q3_8"
             options={checkboxOptions}
@@ -377,7 +422,7 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок легко отвлекается и теряет интерес к деятельности:</p>
+          <label className={style.label}>Ребенку трудно контролировать свои импульсы:</label>
           <RadioOptions
             name="q3_9"
             options={checkboxOptions}
@@ -386,7 +431,7 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок может долго и сосредоточенно заниматься одной деятельностью:</p>
+          <label className={style.label}>Ребенок умеет следовать правилам и инструкциям:</label>
           <RadioOptions
             name="q3_10"
             options={checkboxOptions}
@@ -398,7 +443,7 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
       <section className={style.section}>
         <h2 className={style.sectionTitle}>Раздел 4. Самооценка и уверенность в себе</h2>
         <div className={style.field}>
-          <p>Ребенок уверен в своих силах и способностях:</p>
+          <label className={style.label}>Ребенок уверен в своих силах и способностях:</label>
           <RadioOptions
             name="q4_1"
             options={checkboxOptions}
@@ -407,7 +452,7 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок часто сомневается в себе:</p>
+          <label className={style.label}>Ребенок часто сомневается в себе:</label>
           <RadioOptions
             name="q4_2"
             options={checkboxOptions}
@@ -416,7 +461,7 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок легко принимает решения:</p>
+          <label className={style.label}>Ребенок уверен в своих силах и способностях:</label>
           <RadioOptions
             name="q4_3"
             options={checkboxOptions}
@@ -425,7 +470,7 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок часто переживает, что другие думают о нем плохо:</p>
+          <label className={style.label}>Ребенок часто сомневается в себе:</label>
           <RadioOptions
             name="q4_4"
             options={checkboxOptions}
@@ -434,7 +479,7 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок легко принимает решения:</p>
+          <label className={style.label}>Ребенок уверен в своих силах и способностях:</label>
           <RadioOptions
             name="q4_5"
             options={checkboxOptions}
@@ -443,7 +488,7 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок часто переживает, что другие думают о нем плохо:</p>
+          <label className={style.label}>Ребенок часто сомневается в себе:</label>
           <RadioOptions
             name="q4_6"
             options={checkboxOptions}
@@ -452,7 +497,7 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок легко принимает решения:</p>
+          <label className={style.label}>Ребенок уверен в своих силах и способностях:</label>
           <RadioOptions
             name="q4_7"
             options={checkboxOptions}
@@ -461,7 +506,7 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок часто переживает, что другие думают о нем плохо:</p>
+          <label className={style.label}>Ребенок часто сомневается в себе:</label>
           <RadioOptions
             name="q4_8"
             options={checkboxOptions}
@@ -470,7 +515,7 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок легко принимает решения:</p>
+          <label className={style.label}>Ребенок уверен в своих силах и способностях:</label>
           <RadioOptions
             name="q4_9"
             options={checkboxOptions}
@@ -479,7 +524,7 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
           />
         </div>
         <div className={style.field}>
-          <p>Ребенок часто переживает, что другие думают о нем плохо:</p>
+          <label className={style.label}>Ребенок часто сомневается в себе:</label>
           <RadioOptions
             name="q4_10"
             options={checkboxOptions}
@@ -496,8 +541,11 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
 
         {/* Общее эмоциональное состояние */}
         <div className={style.field}>
-          <p>Как Вы оцениваете общее эмоциональное состояние вашего ребенка?</p>
+          <label className={style.label}>
+            Как Вы оцениваете общее эмоциональное состояние вашего ребенка?
+          </label>
           <RadioOptions
+            direction
             name="emotionalState"
             options={checkboxOptions}
             selected={answers['emotionalState']}
@@ -506,36 +554,56 @@ const QuestionsScreen = ({ onBack, submit }: Props) => {
         </div>
 
         {/* Особенности развития или поведения */}
-        <div className={style.field}>
-          <label>Есть ли у Вашего ребенка какие-либо особенности развития или поведения, о которых Вы хотели бы сообщить дополнительно?</label>
-          <textarea rows={3} className={style.textarea} />
+        <div className={style.textAreaField}>
+          <label className={style.label}>
+            Есть ли у Вашего ребенка какие-либо особенности развития или поведения,
+            о которых Вы хотели бы сообщить дополнительно?
+          </label>
+          <textarea className={style.textarea} />
         </div>
 
         {/* Сильные стороны и таланты */}
-        <div className={style.field}>
-          <label>Какие, на Ваш взгляд, сильные стороны и таланты есть у Вашего ребенка?</label>
-          <textarea rows={3} className={style.textarea} />
+        <div className={style.textAreaField}>
+          <label className={style.label}>
+            Какие, на Ваш взгляд, сильные стороны и таланты есть у Вашего ребенка?
+          </label>
+          <textarea className={style.textarea} />
         </div>
 
         {/* Обращались ли к специалистам? */}
-        <div className={style.field}>
-          <label>Обращались ли Вы ранее к специалистам (психологу, неврологу, логопеду)?</label>
-          <textarea rows={3} className={style.textarea} />
+        <div className={style.textAreaField}>
+          <label className={style.label}>
+            Обращались ли Вы ранее к специалистам (психологу, неврологу, логопеду)?
+          </label>
+          <textarea className={style.textarea} />
         </div>
-
-
       </section>
 
       {/* Кнопки */}
       <div className={style.buttonsContainer} >
         {/* Шаги */}
-        < span >Шаг 2/3</span >
-        {/* Загрузка рисунков */}
-        < button onClick={onBack} style={{ marginRight: "10px" }} >К загрузке рисунков</button >
-        {/* Активная только если все обязательные заполнены */}
-        < button onClick={handleSendSurvey} disabled={!isFormComplete()} >Узнать результаты</button >
+        < span className={style.step}>Шаг 2/3</span >
+        <div className={style.buttons}>
+          < button className={style.buttonBack} onClick={onBack} >
+            <Image className={style.arrow} src={arrow} alt="back" width={24} height={24} />
+            К загрузке рисунков
+          </button >
+          {/* Активная только если все обязательные заполнены */}
+          < button
+            className={style.button}
+            onClick={handleSendSurvey}
+            disabled={!isFormComplete()} >
+            Узнать результаты
+            <Image
+              className={style.arrowBig}
+              src={ForwardRight}
+              alt="back"
+              width={24}
+              height={24}
+            />
+          </button >
+        </div>
       </div>
-
     </div >
   );
 };

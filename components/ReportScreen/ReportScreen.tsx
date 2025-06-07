@@ -1,7 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
-
+import React, { useState, useEffect, useRef } from 'react';
 import style from './ReportScreen.module.scss';
 import { useSelector } from 'react-redux';
 import { PhotosState } from '../QuastionsScreen/QuestionsScreen';
@@ -12,6 +11,9 @@ const ReportScreen = ({ onStart }: { onStart: () => void }) => {
   const [status, setStatus] = useState<'pending' | 'ready' | 'error'>('pending');
   const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const [retryCount, setRetryCount] = useState(0);
+  const maxRetries = 20;
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (!taskId) {
@@ -26,7 +28,7 @@ const ReportScreen = ({ onStart }: { onStart: () => void }) => {
           `https://sirius-draw-test-94500a1b4a2f.herokuapp.com/report/${taskId}`,
           {
             headers: {
-              'Accept': 'application/pdf' // Явно запрашиваем PDF
+              'Accept': 'application/pdf'
             }
           }
         );
@@ -41,24 +43,51 @@ const ReportScreen = ({ onStart }: { onStart: () => void }) => {
           const blob = await response.blob();
           setPdfBlob(blob);
           setStatus('ready');
+          if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+          }
         } else if (contentType?.includes('application/json')) {
-          // Если сервер сначала возвращает JSON статус
           const data = await response.json();
           if (data.status === 'ready') {
-            // Делаем второй запрос для получения PDF
             await fetchReportPdf();
+            if (intervalRef.current) {
+              clearInterval(intervalRef.current);
+              intervalRef.current = null;
+            }
           } else if (data.status === 'processing') {
-            setTimeout(checkReportStatus, 15000);
+            setRetryCount(prev => {
+              const newCount = prev + 1;
+              if (newCount >= maxRetries) {
+                if (intervalRef.current) {
+                  clearInterval(intervalRef.current);
+                  intervalRef.current = null;
+                }
+                setStatus('error');
+                setErrorMessage('Превышено время ожидания генерации отчета');
+              }
+              return newCount;
+            });
           }
         } else {
           throw new Error('Неизвестный формат ответа');
         }
       } catch (error) {
         console.error('Ошибка при проверке статуса:', error);
-        setStatus('error');
-        setErrorMessage(
-          error instanceof Error ? error.message : 'Произошла неизвестная ошибка'
-        );
+        setRetryCount(prev => {
+          const newCount = prev + 1;
+          if (newCount >= maxRetries) {
+            if (intervalRef.current) {
+              clearInterval(intervalRef.current);
+              intervalRef.current = null;
+            }
+            setStatus('error');
+            setErrorMessage(
+              error instanceof Error ? error.message : 'Произошла неизвестная ошибка'
+            );
+          }
+          return newCount;
+        });
       }
     };
 
@@ -76,14 +105,21 @@ const ReportScreen = ({ onStart }: { onStart: () => void }) => {
         setPdfBlob(blob);
         setStatus('ready');
       } catch (error) {
-        throw error;
+        setStatus('error');
+        setErrorMessage(
+          error instanceof Error ? error.message : 'Ошибка при загрузке PDF'
+        );
       }
     };
 
+    intervalRef.current = setInterval(checkReportStatus, 15000);
     checkReportStatus();
 
     return () => {
-      // Cleanup
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
     };
   }, [taskId]);
 
@@ -105,7 +141,6 @@ const ReportScreen = ({ onStart }: { onStart: () => void }) => {
 
     const url = URL.createObjectURL(pdfBlob);
     window.open(url, '_blank');
-    // URL.revokeObjectURL(url); // Не revoke, чтобы PDF оставался доступен
   };
 
   return (
@@ -117,6 +152,7 @@ const ReportScreen = ({ onStart }: { onStart: () => void }) => {
           <div className={style.spinner}></div>
           <p>Идет обработка ваших результатов. Это может занять несколько минут...</p>
           <p>Пожалуйста, не закрывайте страницу.</p>
+          <p>Попытка {retryCount + 1} из {maxRetries}...</p>
         </div>
       )}
 

@@ -58,7 +58,10 @@ const UploadPhotosScreen = ({ onNext }: Props) => {
         <div className={styles.container}>
             <div className={styles.title}>Загрузите фотографии рисунков</div>
             <div className={styles.formats}>
-                <p><span>!</span>Допустимые форматы файлов: jpg, jpeg, png, pdf. Размер не более 5 Мб</p>
+                <p>
+                    <span>!</span>
+                    Допустимые форматы файлов: jpg, jpeg, png, pdf. Размер не более 5 Мб
+                </p>
             </div>
             <div className={styles.slotsContainer}>
                 {photoSlots.map((slot, index) => (
@@ -73,7 +76,11 @@ const UploadPhotosScreen = ({ onNext }: Props) => {
                                         width={100}
                                         height={100}
                                     />
-                                    <Image onClick={() => handleUpdateClick(index)} className={styles.updateImage} src={updateImage} alt="Upload Image" />
+                                    <Image
+                                        onClick={() => handleUpdateClick(index)}
+                                        className={styles.updateImage}
+                                        src={updateImage}
+                                        alt="Upload Image" />
 
                                     <input
                                         type="file"
@@ -91,7 +98,9 @@ const UploadPhotosScreen = ({ onNext }: Props) => {
                                         onChange={(e) => handleFileChange(index, e)}
                                         style={{ display: 'none' }}
                                     />
-                                    <Image className={styles.uploadImage} src={uploadImage} alt="Upload Image" />
+                                    <Image
+                                        className={styles.uploadImage}
+                                        src={uploadImage} alt="Upload Image" />
                                 </label>
                             )}
                         </div>
@@ -103,7 +112,8 @@ const UploadPhotosScreen = ({ onNext }: Props) => {
             <div className={styles.footContainer}>
                 <span className={styles.step}>Шаг 1/3</span>
                 <button
-                    className={`${styles.button} ${!allPhotosUploaded ? styles.buttonDisabled : ''}`}
+                    className={`${styles.button} ${!allPhotosUploaded
+                        ? styles.buttonDisabled : ''}`}
                     disabled={!allPhotosUploaded}
                     onClick={handleNext}
                 >
